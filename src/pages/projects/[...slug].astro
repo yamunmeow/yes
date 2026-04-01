@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = [
+    { slug: "tarot-deck", title: "Pastel Tarot Deck", year: "2025", description: "Full project details..." },
+    { slug: "rose-cafe-mural", title: "Mural at The Rose Café", year: "2024", description: "Full project details..." }
+  ];
+  
+  return projects.map(project => ({
+    params: { slug: project.slug },
+    props: { project }
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<BaseLayout>
+  <article class="card" style="max-width: 800px; margin: 2rem auto;">
+    <h1>🎨 {project.title}</h1>
+    <small>{project.year}</small>
+    <hr />
+    <div style="margin-top: 1.5rem;">
+      <p>{project.description}</p>
+      <p>This is a placeholder for the full project details. In a real implementation, this would come from Markdown files.</p>
+    </div>
+    <hr />
+    <a href="/projects" class="btn btn-sm">← back to projects</a>
+  </article>
+</BaseLayout>

@@ -1,20 +1,31 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
-	}));
+  const posts = [
+    { slug: "whispers-watercolor", title: "Whispers of Watercolor", date: "Apr 10, 2025", content: "Full content about watercolor techniques..." },
+    { slug: "digital-dreamscapes", title: "Digital Dreamscapes", date: "Mar 28, 2025", content: "Full content about digital art..." }
+  ];
+  
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
 }
-type Props = CollectionEntry<'blog'>;
 
-const post = Astro.props;
-const { Content } = await render(post);
+const { post } = Astro.props;
 ---
 
-<BlogPost {...post.data}>
-	<Content />
-</BlogPost>
+<BaseLayout>
+  <article class="card" style="max-width: 800px; margin: 2rem auto;">
+    <h1>{post.title}</h1>
+    <div class="post-meta">📅 {post.date}</div>
+    <hr />
+    <div style="margin-top: 1.5rem;">
+      <p>{post.content}</p>
+      <p>This is a placeholder for the full blog post content. In a real implementation, this would come from Markdown files or a CMS.</p>
+    </div>
+    <hr />
+    <a href="/blog" class="btn btn-sm">← back to blog</a>
+  </article>
+</BaseLayout>

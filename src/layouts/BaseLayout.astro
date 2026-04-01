@@ -1,0 +1,25 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PatternShapes from '../components/PatternShapes.astro';
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Make It Golden</title>
+</head>
+<body>
+  <Header />
+  <main>
+    <div class="wrapper">
+      <PatternShapes />
+      <slot />
+    </div>
+  </main>
+  <Footer />
+</body>
+</html>

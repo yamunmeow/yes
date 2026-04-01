@@ -1,0 +1,52 @@
+<input 
+  type="text" 
+  id="search-input" 
+  class="search-input" 
+  placeholder="Search posts, projects..."
+  client:load
+/>
+
+<div id="search-status" class="search-feedback"></div>
+
+<script>
+  function setupSearch() {
+    const searchInput = document.getElementById('search-input');
+    const statusDiv = document.getElementById('search-status');
+    
+    if (!searchInput) return;
+    
+    const updateSearch = () => {
+      const term = searchInput.value;
+      // Dispatch custom event for other components to react
+      window.dispatchEvent(new CustomEvent('search', { detail: term }));
+      
+      if (term.trim() !== "") {
+        statusDiv.innerHTML = `🔍 showing results for "${escapeHtml(term)}" &nbsp; 
+          <span class="btn-sm" style="cursor:pointer;" id="clear-search">clear</span>`;
+        const clearBtn = document.getElementById('clear-search');
+        if (clearBtn) {
+          clearBtn.onclick = () => {
+            searchInput.value = '';
+            updateSearch();
+          };
+        }
+      } else {
+        statusDiv.innerHTML = '';
+      }
+    };
+    
+    searchInput.addEventListener('input', updateSearch);
+  }
+  
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+  
+  setupSearch();
+</script>

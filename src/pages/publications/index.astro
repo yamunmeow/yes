@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PublicationCard from '../../components/PublicationCard.astro';
+
+const publications = [
+  { title: "Soft Narratives in Art Journal Quarterly", description: "Essay on pastel aesthetics in contemporary painting.", publisher: "Art Journal", year: "2025", slug: "soft-narratives" },
+  { title: "The Digital Palette", description: "Chapter contribution about color psychology for illustrators.", publisher: "Creative Press", year: "2024", slug: "digital-palette" }
+];
+---
+
+<BaseLayout>
+  <div class="hero">
+    <h1>publications</h1>
+    <p>articles, essays, and featured writing</p>
+  </div>
+  
+  <div class="two-col-grid">
+    {publications.map(pub => <PublicationCard {...pub} />)}
+  </div>
+</BaseLayout>

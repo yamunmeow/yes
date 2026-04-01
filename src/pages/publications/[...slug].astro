@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const publications = [
+    { slug: "soft-narratives", title: "Soft Narratives", publisher: "Art Journal", year: "2025", content: "Full article details..." },
+    { slug: "digital-palette", title: "The Digital Palette", publisher: "Creative Press", year: "2024", content: "Full chapter details..." }
+  ];
+  
+  return publications.map(pub => ({
+    params: { slug: pub.slug },
+    props: { publication: pub }
+  }));
+}
+
+const { publication } = Astro.props;
+---
+
+<BaseLayout>
+  <article class="card" style="max-width: 800px; margin: 2rem auto;">
+    <h1>📖 {publication.title}</h1>
+    <small>{publication.publisher} • {publication.year}</small>
+    <hr />
+    <div style="margin-top: 1.5rem;">
+      <p>{publication.content}</p>
+      <p>This is a placeholder for the full publication content. In a real implementation, this would come from Markdown files.</p>
+    </div>
+    <hr />
+    <a href="/publications" class="btn btn-sm">← back to publications</a>
+  </article>
+</BaseLayout>

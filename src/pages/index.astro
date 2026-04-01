@@ -1,49 +1,78 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import BlogCard from '../components/BlogCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PublicationCard from '../components/PublicationCard.astro';
+
+// Content collections (would typically come from content layer)
+const blogPosts = [
+  { id: 1, title: "Whispers of Watercolor", date: "Apr 10, 2025", excerpt: "Exploring soft gradients and the emotion of bleeding pigments.", tags: ["art", "watercolor"], slug: "whispers-watercolor" },
+  { id: 2, title: "Digital Dreamscapes", date: "Mar 28, 2025", excerpt: "How I create dreamy pastel illustrations using Procreate.", tags: ["digital", "tutorial"], slug: "digital-dreamscapes" },
+  { id: 3, title: "Finding Creative Flow", date: "Mar 15, 2025", excerpt: "Mindfulness routines that boost artistic productivity.", tags: ["creativity", "wellness"], slug: "creative-flow" }
+];
+
+const projects = [
+  { title: "Pastel Tarot Deck", description: "78 illustrated cards with dreamy symbolism", year: "2025", slug: "tarot-deck" },
+  { title: "Mural at The Rose Café", description: "Large-scale floral abstractions", year: "2024", slug: "rose-cafe-mural" }
+];
+
+const publications = [
+  { title: "Soft Narratives in Art Journal Quarterly", description: "Essay on pastel aesthetics", publisher: "Art Journal", year: "2025", slug: "soft-narratives" },
+  { title: "The Digital Palette", description: "Color psychology for illustrators", publisher: "Creative Press", year: "2024", slug: "digital-palette" }
+];
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<BaseLayout>
+  <Hero />
+  
+  <section>
+    <h2 class="page-header">✨ latest from the blog</h2>
+    <div id="posts-container" class="grid-blog">
+      {blogPosts.map(post => (
+        <BlogCard {...post} />
+      ))}
+    </div>
+  </section>
+  
+  <section>
+    <h2 class="page-header">📌 featured projects</h2>
+    <div class="two-col-grid">
+      {projects.map(project => (
+        <ProjectCard {...project} />
+      ))}
+    </div>
+  </section>
+  
+  <section>
+    <h2 class="page-header">📄 recent publications</h2>
+    <div class="two-col-grid">
+      {publications.map(pub => (
+        <PublicationCard {...pub} />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Search functionality for dynamic filtering
+  function setupDynamicSearch() {
+    const searchInput = document.getElementById('search-input');
+    if (!searchInput) return;
+    
+    const filterContent = (term) => {
+      const cards = document.querySelectorAll('.blog-card, .project-card, .publication-card');
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        const matches = term === '' || text.includes(term.toLowerCase());
+        card.style.display = matches ? 'block' : 'none';
+      });
+    };
+    
+    window.addEventListener('search', (e) => {
+      filterContent(e.detail);
+    });
+  }
+  
+  setupDynamicSearch();
+</script>

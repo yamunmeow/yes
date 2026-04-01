@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = [
+  { title: "Pastel Tarot Deck", description: "78 illustrated cards with dreamy symbolism & soft gradients.", year: "2025", slug: "tarot-deck" },
+  { title: "Mural at The Rose Café", description: "Large-scale floral abstractions on community walls.", year: "2024", slug: "rose-cafe-mural" },
+  { title: "Golden Hour Zine", description: "Limited edition risograph publication about summer nostalgia.", year: "2024", slug: "golden-hour-zine" }
+];
+---
+
+<BaseLayout>
+  <div class="hero">
+    <h1>projects</h1>
+    <p>a collection of my creative work</p>
+  </div>
+  
+  <div class="two-col-grid">
+    {projects.map(project => <ProjectCard {...project} />)}
+  </div>
+</BaseLayout>

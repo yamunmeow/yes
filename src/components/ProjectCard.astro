@@ -1,0 +1,19 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  year: string;
+  slug: string;
+}
+
+const { title, description, year, slug } = Astro.props;
+---
+
+<div class="project-card card">
+  <h3>🎨 {title}</h3>
+  <p>{description}</p>
+  <small>{year}</small>
+  <div style="margin-top: 12px;">
+    <a href={`/projects/${slug}`} class="btn btn-sm">view project →</a>
+  </div>
+</div>

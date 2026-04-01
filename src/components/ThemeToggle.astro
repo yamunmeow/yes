@@ -1,0 +1,29 @@
+<button id="theme-toggle-btn" class="theme-toggle" aria-label="Dark/Light mode">☀️</button>
+
+<script>
+  function initTheme() {
+    const toggleBtn = document.getElementById('theme-toggle-btn');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let currentTheme = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
+    
+    const setTheme = (theme) => {
+      if (theme === 'dark') {
+        document.body.classList.add('dark');
+        toggleBtn.innerHTML = '🌙';
+      } else {
+        document.body.classList.remove('dark');
+        toggleBtn.innerHTML = '☀️';
+      }
+      localStorage.setItem('theme', theme);
+    };
+    
+    setTheme(currentTheme);
+    
+    toggleBtn.addEventListener('click', () => {
+      const newTheme = document.body.classList.contains('dark') ? 'light' : 'dark';
+      setTheme(newTheme);
+    });
+  }
+  
+  initTheme();
+</script>

@@ -1,0 +1,13 @@
+---
+export interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const { title = "create. share. inspire.", subtitle = "art & words — a pastel universe by a curious soul" } = Astro.props;
+---
+
+<div class="hero">
+  <h1>{title}</h1>
+  <p>{subtitle}</p>
+</div>
